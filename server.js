@@ -26,7 +26,7 @@ app.use(express.static("public"));
 const databaseUrl = "notetaker";
 const collections = ["notes"];
 
-const db = mongojs(databaseUrl, collections);
+const db = mongojs(process.env.MONGODB_URI, collections);
 
 db.on("error", error => {
   console.log("Database Error:", error);
