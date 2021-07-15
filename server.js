@@ -4,6 +4,7 @@ const logger = require("morgan");
 const path = require("path");
 var moment = require('moment');
 
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(logger("dev"));
@@ -55,19 +56,10 @@ app.get("/all", (req, res) => {
   });
 });
 
-app.get("/all", (req, res) => {
-  db.notes.find({}, (error, data) => {
-    if (error) {
-      res.send(error);
-    } else {
-      res.json(data);
-    }
-  });
-});
 
 
 
 
-app.listen(3000, () => {
-  console.log("App running on port 3000!");
+app.listen(3001, () => {
+  console.log("App running on port 3001!");
 });

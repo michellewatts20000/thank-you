@@ -8,8 +8,6 @@ const email = document.getElementById("email");
 
 const status = document.getElementById("status");
 
-
-
 function getResults() {
     fetch("/all")
         .then(function (response) {
@@ -19,7 +17,9 @@ function getResults() {
             }
             response.json().then(function (data) {
                 newTodoSnippet(data);
+           
             });
+                 
         })
         .catch(function (err) {
             console.log("Fetch Error :-S", err);
@@ -39,6 +39,7 @@ function newTodoSnippet(res) {
       <span style="font-size:12px">${title} - ${moment(created).format('MMMM Do, h:mm a')}</span>
       </li>`;
         todoList.insertAdjacentHTML("beforeend", snippet);
+        
     }
 }
 
@@ -49,6 +50,7 @@ function resetTitleAndNote() {
     title.value = "";
     const email = document.getElementById("email");
     email.value = "";
+   
 }
 
 function updateTitleAndNote(data) {
@@ -83,5 +85,6 @@ actionBtn.addEventListener("click", function (e) {
             .then(res => res.json())
             .then(res => newTodoSnippet([res]));
         resetTitleAndNote();
+      location.reload();
     }
 });
