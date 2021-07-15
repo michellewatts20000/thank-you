@@ -2,17 +2,12 @@ const express = require("express");
 const mongojs = require("mongojs");
 const logger = require("morgan");
 const path = require("path");
-var moment = require('moment');
-const mongoose = require("mongoose");
+
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/notetaker", {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true
-});
+
 
 app.use(logger("dev"));
 
@@ -67,6 +62,6 @@ app.get("/all", (req, res) => {
 
 
 
-app.listen(3001, () => {
+app.listen(PORT, () => {
   console.log("App running on port 3001!");
 });
