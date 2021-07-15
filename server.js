@@ -3,9 +3,16 @@ const mongojs = require("mongojs");
 const logger = require("morgan");
 const path = require("path");
 var moment = require('moment');
+const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/notetaker", {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true
+});
 
 app.use(logger("dev"));
 
