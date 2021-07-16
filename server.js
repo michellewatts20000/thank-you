@@ -2,26 +2,29 @@ const express = require("express");
 const mongojs = require("mongojs");
 const logger = require("morgan");
 const path = require("path");
+var Filter = require('bad-words');
+
+
+filter = new Filter();
 
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-
-
 app.use(logger("dev"));
 
+
+app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
-app.use(express.json());
 
 app.use(express.static("public"));
 
 const databaseUrl = "notetaker";
 const collections = ["notes"];
 
-const db = mongojs(process.env.MONGODB_URI, collections);
+const db = mongojs(process.env.MONGODB_URI || databaseUrl, collections);
 
 db.on("error", error => {
   console.log("Database Error:", error);
@@ -32,7 +35,17 @@ app.get("/", (req, res) => {
 });
 
 app.post("/submit", (req, res) => {
-  console.log(req.body);
+  var data = req.body;
+  var clean = filter.clean(data.note);
+  console.log("rude", data.note);
+  console.log("clean", filter.clean(data.note));
+
+  req.body = {
+    title: data.title,
+    email: data.email,
+    note: clean,
+    created: data.created
+  }
 
   db.notes.insert(req.body, (error, data) => {
     if (error) {

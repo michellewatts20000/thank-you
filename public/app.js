@@ -17,9 +17,9 @@ function getResults() {
             }
             response.json().then(function (data) {
                 newTodoSnippet(data);
-           
+
             });
-                 
+
         })
         .catch(function (err) {
             console.log("Fetch Error :-S", err);
@@ -39,7 +39,7 @@ function newTodoSnippet(res) {
       <span style="font-size:12px">${title} - ${moment(created).format('MMMM Do, h:mm a')}</span>
       </li>`;
         todoList.insertAdjacentHTML("beforeend", snippet);
-        
+
     }
 }
 
@@ -50,7 +50,7 @@ function resetTitleAndNote() {
     title.value = "";
     const email = document.getElementById("email");
     email.value = "";
-   
+
 }
 
 function updateTitleAndNote(data) {
@@ -69,6 +69,7 @@ actionBtn.addEventListener("click", function (e) {
     if (e.target.matches("#make-new")) {
         element = e.target;
         data_id = element.getAttribute("data-id");
+
         fetch("/submit", {
                 method: "post",
                 headers: {
@@ -85,6 +86,6 @@ actionBtn.addEventListener("click", function (e) {
             .then(res => res.json())
             .then(res => newTodoSnippet([res]));
         resetTitleAndNote();
-      location.reload();
+        location.reload();
     }
 });
