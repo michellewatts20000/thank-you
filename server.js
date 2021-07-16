@@ -6,7 +6,7 @@ var Filter = require('bad-words');
 
 
 filter = new Filter();
-
+filter.addWords('arsehole');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
